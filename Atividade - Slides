@@ -1,0 +1,172 @@
+//Exercício 01//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func dividir(a, b float64) (float64, error) {
+	if b == 0 {
+		return 0, errors.New("Divisão por zero não é permitida")
+	}
+
+	return a / b, nil
+}
+
+func main() {
+	num1 := 10.0
+	num2 := 2.0
+
+	resultado, err := dividir(num1, num2)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println("Resultado:", resultado)
+}
+
+//Exercício 02//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func calcularMedia(numeros []float64) (float64, error) {
+	if len(numeros) == 0 {
+		return 0, errors.New("A lista está vazia")
+	}
+
+	total := 0.0
+	for _, num := range numeros {
+		total += num
+	}
+
+	media := total / float64(len(numeros))
+	return media, nil
+}
+
+func main() {
+	lista := []float64{10.0, 5.0, 7.5, 9.8, 6.2}
+
+	media, err := calcularMedia(lista)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println("Média:", media)
+}
+
+//Exercício 03//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func contarCaracteres(str string) (int, error) {
+	if str == "" {
+		return 0, errors.New("A string está vazia")
+	}
+
+	return len(str), nil
+}
+
+func main() {
+	texto := "Olá, mundo!"
+
+	numCaracteres, err := contarCaracteres(texto)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println("Número de caracteres:", numCaracteres)
+}
+
+//Exercício 04//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"math"
+)
+
+func encontrarMenorValor(slice []int) (int, error) {
+	if len(slice) == 0 {
+		return 0, errors.New("O slice está vazio")
+	}
+
+	menor := math.MaxInt64
+	for _, num := range slice {
+		if num < menor {
+			menor = num
+		}
+	}
+
+	return menor, nil
+}
+
+func main() {
+	valores := []int{10, 5, 7, 9, 3}
+
+	menorValor, err := encontrarMenorValor(valores)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println("Menor valor:", menorValor)
+}
+
+//Exercício 05//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func fibonacci(n int) ([]int, error) {
+	if n < 0 {
+		return nil, errors.New("O número é negativo")
+	}
+
+	if n == 0 {
+		return []int{0}, nil
+	} else if n == 1 {
+		return []int{0, 1}, nil
+	}
+
+	sequence := []int{0, 1}
+
+	for i := 2; i <= n; i++ {
+		next := sequence[i-1] + sequence[i-2]
+		sequence = append(sequence, next)
+	}
+
+	return sequence, nil
+}
+
+func main() {
+	num := 8
+
+	fibSeq, err := fibonacci(num)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Printf("Sequência de Fibonacci até %d: %v\n", num, fibSeq)
+}
