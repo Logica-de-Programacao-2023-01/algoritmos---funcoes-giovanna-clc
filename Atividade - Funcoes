@@ -1,0 +1,685 @@
+//Exercício 01//
+
+package main
+
+import "fmt"
+
+func calcularMedia(slice []int) float64 {
+	total := 0
+	for _, valor := range slice {
+		total += valor
+	}
+	media := float64(total) / float64(len(slice))
+	return media
+}
+
+func main() {
+	numeros := []int{10, 5, 8, 12, 6}
+	media := calcularMedia(numeros)
+	fmt.Printf("Média: %.2f\n", media)
+}
+
+//Exercício 02//
+
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func contarVogais(str string) int {
+	vogais := "aeiouAEIOU"
+	count := 0
+	for _, char := range str {
+		if strings.ContainsRune(vogais, char) {
+			count++
+		}
+	}
+	return count
+}
+
+func main() {
+	texto := "Olá, mundo!"
+	vogais := contarVogais(texto)
+	fmt.Printf("Quantidade de vogais: %d\n", vogais)
+}
+
+//Exercício 03//
+
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func concatenarStrings(slice []string) string {
+	return strings.Join(slice, "")
+}
+
+func main() {
+	palavras := []string{"Olá", ", ", "mundo", "!"}
+	concatenado := concatenarStrings(palavras)
+	fmt.Printf("Concatenação: %s\n", concatenado)
+}
+
+//Exercício 04//
+
+package main
+
+import "fmt"
+
+func segundoMaiorValor(slice []int) int {
+	if len(slice) < 2 {
+		panic("O slice precisa ter pelo menos dois elementos.")
+	}
+
+	maior := slice[0]
+	segundoMaior := slice[1]
+
+	for i := 2; i < len(slice); i++ {
+		if slice[i] > maior {
+			segundoMaior = maior
+			maior = slice[i]
+		} else if slice[i] > segundoMaior && slice[i] != maior {
+			segundoMaior = slice[i]
+		}
+	}
+
+	return segundoMaior
+}
+
+func main() {
+	numeros := []int{5, 10, 3, 8, 12}
+	segundoMaior := segundoMaiorValor(numeros)
+	fmt.Printf("O segundo maior valor é: %d\n", segundoMaior)
+}
+
+//Exercício 05//
+
+package main
+
+import "fmt"
+
+func encontrarPosicao(slice []int, valor int) int {
+	for i, elemento := range slice {
+		if elemento == valor {
+			return i
+		}
+	}
+	return -1
+}
+
+func main() {
+	numeros := []int{1, 3, 5, 7, 9}
+	valor := 5
+	posicao := encontrarPosicao(numeros, valor)
+	fmt.Printf("A posição do primeiro elemento igual a %d é: %d\n", valor, posicao)
+}
+
+//Exercício 06//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
+func concatenarComVirgula(slice []string) (string, error) {
+	if len(slice) == 0 {
+		return "", errors.New("O slice está vazio")
+	}
+
+	resultado := strings.Join(slice, ", ")
+	return resultado, nil
+}
+
+func main() {
+	palavras := []string{"Olá", "mundo", "GPT-3.5"}
+	concatenado, err := concatenarComVirgula(palavras)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+	fmt.Println(concatenado)
+}
+
+//Exercício 07//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func aplicarFuncaoEmSlice(slice []int, fn func(int) int) ([]int, error) {
+	if len(slice) == 0 {
+		return nil, errors.New("O slice está vazio")
+	}
+
+	resultados := make([]int, len(slice))
+	for i, valor := range slice {
+		resultados[i] = fn(valor)
+	}
+
+	return resultados, nil
+}
+
+func main() {
+	numeros := []int{1, 2, 3, 4, 5}
+
+	dobro := func(x int) int {
+		return x * 2
+	}
+
+	resultados, err := aplicarFuncaoEmSlice(numeros, dobro)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(resultados)
+}
+
+//Exercicio 08//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func filtrarPares(slice []int) ([]int, error) {
+	if len(slice) == 0 {
+		return nil, errors.New("O slice está vazio")
+	}
+
+	pares := make([]int, 0)
+	for _, valor := range slice {
+		if valor%2 == 0 {
+			pares = append(pares, valor)
+		}
+	}
+
+	return pares, nil
+}
+
+func main() {
+	numeros := []int{1, 2, 3, 4, 5, 6}
+
+	pares, err := filtrarPares(numeros)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(pares)
+}
+
+//Exercício 09//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
+func extrairPalavras(str string) ([]string, error) {
+	if str == "" {
+		return nil, errors.New("A string está vazia")
+	}
+
+	palavras := strings.Fields(str)
+	return palavras, nil
+}
+
+func main() {
+	frase := "Olá, mundo! Bem-vindo ao GPT-3.5"
+
+	palavras, err := extrairPalavras(frase)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(palavras)
+}
+
+//Exercício 10//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"sort"
+)
+
+func ordenarCrescente(slice []int) ([]int, error) {
+	if len(slice) == 0 {
+		return nil, errors.New("O slice está vazio")
+	}
+
+	sliceOrdenado := make([]int, len(slice))
+	copy(sliceOrdenado, slice) 
+
+	sort.Ints(sliceOrdenado) 
+
+	return sliceOrdenado, nil
+}
+
+func main() {
+	numeros := []int{5, 2, 9, 1, 7}
+
+	ordenados, err := ordenarCrescente(numeros)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(ordenados)
+}
+
+//Exercício 11//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"math"
+)
+
+func isPrimo(num int) (bool, error) {
+	if num < 0 {
+		return false, errors.New("O número é negativo")
+	}
+
+	if num < 2 {
+		return false, nil
+	}
+
+	limite := int(math.Sqrt(float64(num))) + 1
+	for i := 2; i < limite; i++ {
+		if num%i == 0 {
+			return false, nil
+		}
+	}
+
+	return true, nil
+}
+
+func main() {
+	numero := 17
+
+	primo, err := isPrimo(numero)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(primo)
+}
+
+//Exercício 12//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+	"unicode"
+)
+
+func filtrarIniciaisMaiusculas(slice []string) (string, error) {
+	if len(slice) == 0 {
+		return "", errors.New("O slice está vazio")
+	}
+
+	var result []string
+	for _, palavra := range slice {
+		if len(palavra) > 0 && unicode.IsUpper([]rune(palavra)[0]) {
+			result = append(result, palavra)
+		}
+	}
+
+	return strings.Join(result, ", "), nil
+}
+
+func main() {
+	palavras := []string{"Gato", "cachorro", "Elefante", "leão"}
+
+	iniciaisMaiusculas, err := filtrarIniciaisMaiusculas(palavras)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(iniciaisMaiusculas)
+}
+
+//Exercício 13//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"math"
+)
+
+func somaDigitos(num int) (int, error) {
+	if num < 0 {
+		return 0, errors.New("O número é negativo")
+	}
+
+	if num == 0 {
+		return 0, nil
+	}
+
+	soma := 0
+	for num != 0 {
+		digito := num % 10 
+		soma += digito     
+		num /= 10         
+	}
+
+	return soma, nil
+}
+
+func main() {
+	numero := 12345
+
+	soma, err := somaDigitos(numero)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(soma)
+}
+
+//Exercício 14//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func intersect(s1 []int, s2 []int) ([]int, error) {
+	if len(s1) == 0 || len(s2) == 0 {
+		return nil, errors.New("Um dos slices está vazio")
+	}
+
+	intersection := make([]int, 0)
+	visited := make(map[int]bool)
+
+	for _, num := range s1 {
+		visited[num] = true
+	}
+
+	for _, num := range s2 {
+		if visited[num] {
+			intersection = append(intersection, num)
+		}
+	}
+
+	return intersection, nil
+}
+
+func main() {
+	slice1 := []int{1, 2, 3, 4, 5}
+	slice2 := []int{4, 5, 6, 7, 8}
+
+	result, err := intersect(slice1, slice2)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(result)
+}
+
+//Exercício 15//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func numeroEstaNoSlice(numero int, slice []int) (bool, error) {
+	if len(slice) == 0 {
+		return false, errors.New("O slice está vazio")
+	}
+
+	for _, valor := range slice {
+		if valor == numero {
+			return true, nil
+		}
+	}
+
+	return false, nil
+}
+
+func main() {
+	slice := []int{1, 2, 3, 4, 5}
+	numero := 3
+
+	estaNoSlice, err := numeroEstaNoSlice(numero, slice)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(estaNoSlice)
+}
+
+//Exercício 16//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
+func substituirVogaisPorAsterisco(str string) (string, error) {
+	if str == "" {
+		return "", errors.New("A string está vazia")
+	}
+
+	vogais := "aeiouAEIOU"
+	resultado := ""
+
+	for _, char := range str {
+		if strings.ContainsRune(vogais, char) {
+			resultado += "*"
+		} else {
+			resultado += string(char)
+		}
+	}
+
+	return resultado, nil
+}
+
+func main() {
+	texto := "Hello, World!"
+
+	novoTexto, err := substituirVogaisPorAsterisco(texto)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(novoTexto)
+}
+
+//Exercício 17//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+	"sort"
+	"strings"
+)
+
+func ordenarStrings(slice []string) (string, error) {
+	if len(slice) == 0 {
+		return "", errors.New("O slice está vazio")
+	}
+
+	sort.Strings(slice)
+	resultado := strings.Join(slice, "")
+
+	return resultado, nil
+}
+
+func main() {
+	slice := []string{"banana", "abacaxi", "laranja"}
+
+	novaString, err := ordenarStrings(slice)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println(novaString)
+}
+
+//Exercício 18//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func aplicarFuncaoEmSlice(slice []int, fn func(int) int) (int, error) {
+	if len(slice) == 0 {
+		return 0, errors.New("O slice está vazio")
+	}
+
+	soma := 0
+	for _, valor := range slice {
+		resultado := fn(valor)
+		soma += resultado
+	}
+
+	return soma, nil
+}
+
+func main() {
+	slice := []int{1, 2, 3, 4, 5}
+
+	dobrar := func(numero int) int {
+		return numero * 2
+	}
+
+	resultado, err := aplicarFuncaoEmSlice(slice, dobrar)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println("Resultado:", resultado)
+}
+
+//Exercíio 19//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func isPrimo(numero int) bool {
+	if numero < 2 {
+		return false
+	}
+
+	for i := 2; i*i <= numero; i++ {
+		if numero%i == 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+func primosMenoresOuIguais(numero int) ([]int, error) {
+	if numero < 0 {
+		return nil, errors.New("O número é negativo")
+	}
+
+	primos := []int{}
+	for i := 2; i <= numero; i++ {
+		if isPrimo(i) {
+			primos = append(primos, i)
+		}
+	}
+
+	return primos, nil
+}
+
+func main() {
+	numero := 20
+
+	primos, err := primosMenoresOuIguais(numero)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
+
+	fmt.Println("Números primos menores ou iguais a", numero, ":")
+	fmt.Println(primos)
+}
+
+//Exercício 20//
+
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func stringsComMaisDe5Caracteres(strings []string) ([]string, error) {
+	if len(strings) == 0 {
+		return nil, errors.New("O slice está vazio")
+	}
+
+	resultado := []string{}
+	for _, str := range strings {
+		if len(str) > 5 {
+			resultado = append(resultado, str)
+		}
+	}
+
+	return resultado, nil
+}
+
+func main() {
+	slice := []string{"Olá", "Mundo", "Golang", "Programação", "AI", "Chatbot"}
+
+	resultado, err := stringsComMaisDe5Caracteres(slice)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return
+	}
